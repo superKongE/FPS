@@ -1,0 +1,10 @@
+/Saved
+/Intermediate
+/.vs
+/Build
+*.sln
+*_BuiltData.uasset
+*.ipch
+*.ucas
+*.uasset
+*.umap
