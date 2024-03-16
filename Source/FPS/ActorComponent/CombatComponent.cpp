@@ -518,7 +518,6 @@ void UCombatComponent::ReloadEnd()
 }
 
 
-
 void UCombatComponent::PlayMontage(ECombatState CombatState)
 {
 	if (CombatMontage == nullptr) return;
