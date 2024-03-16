@@ -1,4 +1,4 @@
-#include "FPS/ActorComponent/CombatComponent.h"
+ï»¿#include "FPS/ActorComponent/CombatComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
 #include "Engine/SkeletalMeshSocket.h"
@@ -85,7 +85,7 @@ void UCombatComponent::TrachUnderCrossHair()
 	FVector WorldDirection;
 	UGameplayStatics::DeprojectScreenToWorld(PlayerController, CrossHairPosition, WorldPosition, WorldDirection);
 
-	// 3ÀÎÄªÀÇ °æ¿ì Ä«¸Ş¶ó°¡ Ä³¸¯ÅÍ µÚ¿¡ ÀÖÀ¸¹Ç·Î Ä«¸Ş¶ó¿Í Ä³¸¯ÅÍÀÇ °Å¸®¸¸Å­ ¾ÕÀ¸·Î ÀÌµ¿
+	// 3ì¸ì¹­ì˜ ê²½ìš° ì¹´ë©”ë¼ê°€ ìºë¦­í„° ë’¤ì— ìˆìœ¼ë¯€ë¡œ ì¹´ë©”ë¼ì™€ ìºë¦­í„°ì˜ ê±°ë¦¬ë§Œí¼ ì•ìœ¼ë¡œ ì´ë™
 	float DistanceToCharacter = (OwnerCharacter->GetActorLocation() - WorldPosition).Size();
 	WorldPosition += WorldDirection * (DistanceToCharacter + 10.f);
 
@@ -174,7 +174,7 @@ void UCombatComponent::GetItem()
 }
 
 
-// ÀÎº¥¿¡¼­ ½½·ÔÀ¸·Î ¹«±â¸¦ ¿Å±â¸é ÀåÂøÇÏ±â À§ÇØ È£ÃâµÊ                           Index : ¾î´À ½½·ÔÀÎÁö
+// ì¸ë²¤ì—ì„œ ìŠ¬ë¡¯ìœ¼ë¡œ ë¬´ê¸°ë¥¼ ì˜®ê¸°ë©´ ì¥ì°©í•˜ê¸° ìœ„í•´ í˜¸ì¶œë¨                           Index : ì–´ëŠ ìŠ¬ë¡¯ì¸ì§€
 void UCombatComponent::EquipWeaponFromSlot(UItemObject* ItemObject, int32 Index)
 {
 	if (OwnerCharacter == nullptr || ItemObject == nullptr || CurrentCombatState != ECombatState::ECS_Idle) return;
@@ -199,7 +199,7 @@ void UCombatComponent::EquipWeaponFromSlot(UItemObject* ItemObject, int32 Index)
 		OwnerCharacter->SetIsEquipped(true);
 		OwnerCharacter->SetbUseLeftHandTransform(true);
 
-		// Ã³À½ ÀåÂøÇÏ°Å³ª ÀåÂøÁßÀÎ ¹«±â¿Í ÀÎº¥Åä¸® ¹«±â¸¦ ¹Ù²Ù¸é
+		// ì²˜ìŒ ì¥ì°©í•˜ê±°ë‚˜ ì¥ì°©ì¤‘ì¸ ë¬´ê¸°ì™€ ì¸ë²¤í† ë¦¬ ë¬´ê¸°ë¥¼ ë°”ê¾¸ë©´
 		if (CurrentEquippedWeaponIndex == Index || OwnerCharacter->GetEquippedWeaponCnt() == 0)
 		{
 			CurrentEquippedWeaponIndex = Index;
@@ -215,7 +215,7 @@ void UCombatComponent::EquipWeaponFromSlot(UItemObject* ItemObject, int32 Index)
 
 			OwnerCharacter->GetRenderTargetCharacter()->EquipWeapon(ItemObject->GetItemClass());
 		}
-		// Ã³À½ ÀåÂøÀÌ ¾Æ´Ï°Å³ª µî µÎÀÇ ¹«±â¿Í ÀÎº¥Åä¸® ¹«±â¸¦ ¹Ù²Ù¸é
+		// ì²˜ìŒ ì¥ì°©ì´ ì•„ë‹ˆê±°ë‚˜ ë“± ë‘ì˜ ë¬´ê¸°ì™€ ì¸ë²¤í† ë¦¬ ë¬´ê¸°ë¥¼ ë°”ê¾¸ë©´
 		else
 		{
 			if(WeaponArray[Index])
@@ -230,7 +230,7 @@ void UCombatComponent::EquipWeaponFromSlot(UItemObject* ItemObject, int32 Index)
 	}
 	OwnerCharacter->SetEquippedWeaponCnt(1);
 }
-// gÅ°¸¦ ´©¸£¸é µé°íÀÖ´Â ¹«±â¸¦ ¹ö¸²
+// gí‚¤ë¥¼ ëˆ„ë¥´ë©´ ë“¤ê³ ìˆëŠ” ë¬´ê¸°ë¥¼ ë²„ë¦¼
 void UCombatComponent::DropWeapon()
 {
 	if (OwnerCharacter == nullptr || CurrentCombatState != ECombatState::ECS_Idle) return;
@@ -252,18 +252,18 @@ void UCombatComponent::DropWeapon()
 
 		OwnerCharacter->GetRenderTargetCharacter()->DropWeapon();
 
-		// ½½·Ô¿¡¼­ ¹«±â Á¦°Å
+		// ìŠ¬ë¡¯ì—ì„œ ë¬´ê¸° ì œê±°
 		if (CurrentEquippedWeaponIndex == 0)
 			FirstSlotWeaponDrop.Execute();
 		else
 			SecondSlotWeaponDrop.Execute();
 
-		// ´Ù¸¥ ½½·ÔÀÇ ¹«±â ÀåÂøÇÏ±â
+		// ë‹¤ë¥¸ ìŠ¬ë¡¯ì˜ ë¬´ê¸° ì¥ì°©í•˜ê¸°
 		EquipNextWeapon();
 		OwnerCharacter->GetRenderTargetCharacter()->EquipNextWeapon();
 	}
 }
-// ÀåÂøÁßÀÎ ¹«±â¸¦ ¹ö·ÈÀ»¶§ ´ÙÀ½ ¹«±â¸¦ ÀÚµ¿À¸·Î ÀåÂøÇÏ±â
+// ì¥ì°©ì¤‘ì¸ ë¬´ê¸°ë¥¼ ë²„ë ¸ì„ë•Œ ë‹¤ìŒ ë¬´ê¸°ë¥¼ ìë™ìœ¼ë¡œ ì¥ì°©í•˜ê¸°
 void UCombatComponent::EquipNextWeapon()
 {
 	if (OwnerCharacter == nullptr) return;
@@ -272,7 +272,7 @@ void UCombatComponent::EquipNextWeapon()
 	TArray<AItem*>& WeaponArray = OwnerCharacter->GetWeaponArray();
 	int32 NextIndex = (CurrentEquippedWeaponIndex + 1) % 2;
 
-	// ´ÙÀ½ ¹«±â°¡ ÀÖÀ¸¸é
+	// ë‹¤ìŒ ë¬´ê¸°ê°€ ìˆìœ¼ë©´
 	if (WeaponArray[NextIndex])
 	{
 		const USkeletalMeshSocket* Hand_r_Socket = OwnerCharacter->GetMesh()->GetSocketByName(FName("hand_r_socket"));
@@ -288,7 +288,7 @@ void UCombatComponent::EquipNextWeapon()
 }
 
 
-// 1¹ø ¹«±â·Î ÀüÈ¯
+// 1ë²ˆ ë¬´ê¸°ë¡œ ì „í™˜
 void UCombatComponent::ChangeToFirstWeapon()
 {
 	if (OwnerCharacter != nullptr && CurrentCombatState == ECombatState::ECS_Idle)
@@ -296,7 +296,7 @@ void UCombatComponent::ChangeToFirstWeapon()
 		TArray<AItem*>& WeaponArray = OwnerCharacter->GetWeaponArray();
 		int32& CurrentEquippedWeaponIndex = OwnerCharacter->GetCurrentEquippedWeaponIndex();
 
-		// ÀåÂøÇÑ ¹«±â°¡ ¾ø°Å³ª ¹«±â 1°³¸¸ Âø¿ëÇÑ °æ¿ì
+		// ì¥ì°©í•œ ë¬´ê¸°ê°€ ì—†ê±°ë‚˜ ë¬´ê¸° 1ê°œë§Œ ì°©ìš©í•œ ê²½ìš°
 		if (OwnerCharacter->GetEquippedWeaponCnt() == 0 || WeaponArray[0] == nullptr || WeaponArray[1] == nullptr) return;
 
 		AttachWeaponBack(1);
@@ -312,7 +312,7 @@ void UCombatComponent::ChangeToFirstWeapon()
 		}
 	}
 }
-// 2¹ø ¹«±â·Î ÀüÈ¯
+// 2ë²ˆ ë¬´ê¸°ë¡œ ì „í™˜
 void UCombatComponent::ChangeToSecondWeapon()
 {
 	if (OwnerCharacter != nullptr && CurrentCombatState == ECombatState::ECS_Idle)
@@ -320,7 +320,7 @@ void UCombatComponent::ChangeToSecondWeapon()
 		TArray<AItem*>& WeaponArray = OwnerCharacter->GetWeaponArray();
 		int32& CurrentEquippedWeaponIndex = OwnerCharacter->GetCurrentEquippedWeaponIndex();
 
-		// ÀåÂøÇÑ ¹«±â°¡ ¾ø°Å³ª ¹«±â 1°³¸¸ Âø¿ëÇÑ °æ¿ì
+		// ì¥ì°©í•œ ë¬´ê¸°ê°€ ì—†ê±°ë‚˜ ë¬´ê¸° 1ê°œë§Œ ì°©ìš©í•œ ê²½ìš°
 		if (OwnerCharacter->GetEquippedWeaponCnt() == 1 || WeaponArray[0] == nullptr || WeaponArray[1] == nullptr) return;
 
 		AttachWeaponBack(0);
@@ -336,7 +336,7 @@ void UCombatComponent::ChangeToSecondWeapon()
 		}
 	}
 }
-// ¹«±â¸¦ µî µÚ¿¡ ´Ş±â
+// ë¬´ê¸°ë¥¼ ë“± ë’¤ì— ë‹¬ê¸°
 void UCombatComponent::AttachWeaponBack(int32 Index)
 {
 	if (OwnerCharacter == nullptr) return;
@@ -379,22 +379,22 @@ void UCombatComponent::Aim()
 }
 
 
-// Á¤Á¶ÁØ
+// ì •ì¡°ì¤€
 void UCombatComponent::AimDownSightInfo()
 {
 	if (OwnerCharacter == nullptr) return;
 
 	TArray<AItem*>& WeaponArray = OwnerCharacter->GetWeaponArray();
 	int32& CurrentEquippedWeaponIndex = OwnerCharacter->GetCurrentEquippedWeaponIndex();
-	if (CurrentEquippedWeaponIndex == -1)return;
+	if (CurrentEquippedWeaponIndex == -1) return;
 
-	// Ä«¸Ş¶ó¿¡¼­ºÎÅÍ ½Ã¾ß ¹æÇâÀ¸·Î 20¸¸Å­ ¶³¾îÁø°÷
+	// ì¹´ë©”ë¼ì—ì„œë¶€í„° ì‹œì•¼ ë°©í–¥ìœ¼ë¡œ 20ë§Œí¼ ë–¨ì–´ì§„ê³³
 	FTransform CameraTransform = OwnerCharacter->GetFirstPersonCamera()->GetComponentTransform();
 	CameraTransform.SetLocation(CameraTransform.GetLocation() + CameraTransform.GetRotation().GetForwardVector() * 20.f);
 
-	// ÃÑ °¡´Æ¼è 
+	// ì´ ê°€ëŠ ì‡  
 	FTransform AimSocketTransform = WeaponArray[CurrentEquippedWeaponIndex]->GetItemMesh()->GetSocketTransform(FName("AimSocket"));
-	// ÃÑÀ» Áå ¼Õ
+	// ì´ì„ ì¥” ì†
 	FTransform RightHandTransform = OwnerCharacter->GetMesh()->GetSocketTransform(FName("hand_r"));
 
 	HandTransform = UKismetMathLibrary::MakeRelativeTransform(CameraTransform, AimSocketTransform);
@@ -411,7 +411,7 @@ void UCombatComponent::ShootPressed()
 	{
 		bool IsRecoveryEnd = true;
 
-		// ¹İµ¿ È¸º¹ ½Ã°£ÀÌ ¾È³¡³µÀ¸¸é
+		// ë°˜ë™ íšŒë³µ ì‹œê°„ì´ ì•ˆëë‚¬ìœ¼ë©´
 		if (GetWorld()->GetTimerManager().TimerExists(RecoilRecoveryEndHandle))
 		{
 			GetWorld()->GetTimerManager().ClearTimer(RecoilRecoveryEndHandle);
@@ -464,7 +464,7 @@ void UCombatComponent::Shooting()
 		return;
 	}
 
-	// ÅºÃ¢À» ´Ù ¾²´Â µî ¹ß»ç ½ÇÆĞ½Ã
+	// íƒ„ì°½ì„ ë‹¤ ì“°ëŠ” ë“± ë°œì‚¬ ì‹¤íŒ¨ì‹œ
 	if (!EquippedWeapon->GetCanShooting())
 	{
 		CurrentCombatState = ECombatState::ECS_Idle;
@@ -541,7 +541,7 @@ void UCombatComponent::PlayMontage(ECombatState CombatState)
 }
 
 
-// Æ¯Á¤ ¹ß¼ö ÀÌ»ó ½î¸é ÁÂ¿ì ¹İµ¿ÀÌ ¹İº¹µÇµµ·Ï ÇÔ
+// íŠ¹ì • ë°œìˆ˜ ì´ìƒ ì˜ë©´ ì¢Œìš° ë°˜ë™ì´ ë°˜ë³µë˜ë„ë¡ í•¨
 float UCombatComponent::GetRecoilValue(int32 Cnt)
 {
 	if (Cnt > 7)
@@ -560,13 +560,9 @@ float UCombatComponent::GetRecoilValue(int32 Cnt)
 			CurrentMoveRecoilCnt++;
 
 			if (RecoilCnt % 2 == 1)
-			{
 				return -10.f;
-			}
 			else
-			{
 				return 10.f;
-			}
 		}
 		else if (CurrentStopRecoilCnt != TargetStopRecoilCnt)
 		{
@@ -576,25 +572,20 @@ float UCombatComponent::GetRecoilValue(int32 Cnt)
 
 	return 0.f;
 }
-// ÃÑ±â ¹İµ¿À» À§ÇØ ÃÑÀ» ¾ó¸¶¸¸Å­ ÀÌµ¿½ÃÅ³Áö (ÃÑ ¶³¸²)
+// ì´ê¸° ë°˜ë™ì„ ìœ„í•´ ì´ì„ ì–¼ë§ˆë§Œí¼ ì´ë™ì‹œí‚¬ì§€ (ì´ ë–¨ë¦¼)
 void UCombatComponent::Recoil(AItem* CurrentEquippedWeapon)
 {
 	if (OwnerCharacter == nullptr) return;
 	
 	float Multipler = CurrentEquippedWeapon->GetRecoilScale();
-	float X = FMath::RandRange(-0.16f, 0.16f);
 	float Y = FMath::RandRange(-1.1f, -2.1f);
-	float Z = FMath::RandRange(0.f, 0.f);
-	
-	RecoilRotator = RecoilTransform.GetRotation().Rotator();
 
-	RecoilLocation = FVector(0.f, Multipler * Y, Multipler * Z);
-
+	RecoilLocation = FVector(0.f, Multipler * Y, 0.f);
 	RecoilTransform.SetLocation(RecoilLocation);
 
 	TargetRecoilPitch = MaxRecoilPitch;
 }
-// Ä«¸Ş¶ó ¹İµ¿ °ü·Ã º¯¼ö ÃÊ±âÈ­
+// ì¹´ë©”ë¼ ë°˜ë™ ê´€ë ¨ ë³€ìˆ˜ ì´ˆê¸°í™”
 void UCombatComponent::ResetRecoil()
 {
 	CurrentMoveRecoilCnt = 0;
@@ -603,7 +594,7 @@ void UCombatComponent::ResetRecoil()
 	TargetStopRecoilCnt = 0;
 	RecoilCnt = 0;
 }
-// ÃÑ±â ¹İµ¿ ½ÃÀÛ
+// ì´ê¸° ë°˜ë™ ì‹œì‘ (ì†ì˜ íšŒì „ê°’ì„ ì¡°ì ˆí•´ ì´ì´ ë“¤ë¦¬ê²Œë”)
 void UCombatComponent::RecoilInterp(float DeltaTime, float InterpSpeed)
 {
 	CurrentRecoilPitch = FMath::FInterpTo(CurrentRecoilPitch, TargetRecoilPitch, DeltaTime, InterpSpeed);
@@ -611,7 +602,7 @@ void UCombatComponent::RecoilInterp(float DeltaTime, float InterpSpeed)
 
 	CurrentRecoilTransform = UKismetMathLibrary::TInterpTo(CurrentRecoilTransform, RecoilTransform, DeltaTime, 25.f);
 }
-// ¹İµ¿ µ¹¾Æ¿À±â
+// ë°˜ë™ ëŒì•„ì˜¤ê¸°
 void UCombatComponent::RecoilInterpToZero(float DeltaTime)
 {
 	FTransform ZeroTransform;
@@ -636,7 +627,7 @@ AItem* UCombatComponent::GetEquippedWeapon()
 
 
 
-// Æ½¿¡¼­ È£ÃâµÊ (ÃÑ±â ¹İµ¿À» À§ÇÑ ÄÁÆ®·Ñ·¯ È¸ÀüÀ» ´ã´ç)
+// í‹±ì—ì„œ í˜¸ì¶œë¨ (ì´ê¸° ë°˜ë™ì„ ìœ„í•œ ì»¨íŠ¸ë¡¤ëŸ¬ íšŒì „ì„ ë‹´ë‹¹)
 void UCombatComponent::RecoilTick(float DeltaTime)
 {
 	OwnerPlayerController = OwnerPlayerController == nullptr ?
@@ -648,14 +639,15 @@ void UCombatComponent::RecoilTick(float DeltaTime)
 
 	if (IsRecoil)
 	{	
-		// recoiltime : ÃÑÀ» ¸îÃÊ µ¿¾È œi´ÂÁö
+		// recoiltime : ì´ì„ ëª‡ì´ˆ ë™ì•ˆ ì‡ëŠ”ì§€
 		recoiltime = GetWorld()->GetTimerManager().GetTimerElapsed(FireTimer) + RecoilStartPoint;
-		// Ä¿ºê¿¡¼­ ÇØ´ç ½Ã°£ÀÇ °ªÀ» °¡Á®¿À±â
+		// ì»¤ë¸Œì—ì„œ í•´ë‹¹ ì‹œê°„ì˜ ê°’ì„ ê°€ì ¸ì˜¤ê¸°
 		RecoilVec = EquippedWeapon->GetRecoilCurveValue(recoiltime);
 
-		// ¹İµ¿ °ª ¼³Á¤
+		// ë°˜ë™ ê°’ ì„¤ì •
 		Del.Roll = 0;
 		Del.Pitch = RecoilVec.Y;
+		// ì´ì„ ì–´ëŠì •ë„ ì˜ë©´ ì»¨íŠ¸ë¡¤ëŸ¬ëŠ” ë”ì´ìƒ ìœ„ë¡œ íšŒì „í•˜ì§€ ì•Šê³  ì¢Œìš°ë¡œ ëœë¤í•˜ê²Œ íšŒì „â€‹
 		if (RecoilVec.Z == 0.f)
 			Del.Yaw = FMath::FInterpTo(Del.Yaw, TargetYaw, DeltaTime, 1.f);
 		else
@@ -665,33 +657,29 @@ void UCombatComponent::RecoilTick(float DeltaTime)
 		OwnerPlayerController->SetControlRotation(RecoilStartRot + PlayerDeltaRot + Del); 
 		RecoilDeltaRot = Del;
 
-		if (!Firing)
+		if (!Firing && recoiltime > 0.f)
 		{
-			if (recoiltime > 0.f)
-			{
-				GetWorld()->GetTimerManager().ClearTimer(FireTimer);
-				IsRecoil = false;
+			GetWorld()->GetTimerManager().ClearTimer(FireTimer);
+			IsRecoil = false;
 
-				bRecoilRecovery = true;
-			}
+			bRecoilRecovery = true;
 		}
 	}
-	// ¹İµ¿ È¸º¹
+	// ë°˜ë™ íšŒë³µ
 	else if (bRecoilRecovery)
 	{
 		FRotator tmprot = OwnerPlayerController->GetControlRotation();
 
 		OwnerPlayerController->SetControlRotation(UKismetMathLibrary::RInterpTo(tmprot, tmprot - RecoilDeltaRot, DeltaTime, 10.0f));
 
-		//                                        (ÇöÀç ÇÁ·¹ÀÓ°ú ÀÌÀü ÇÁ·¹ÀÓ°£ÀÇ ÄÁÆ®·Ñ·¯ È¸Àü Â÷ÀÌ)
+		//                                        (í˜„ì¬ í”„ë ˆì„ê³¼ ì´ì „ í”„ë ˆì„ê°„ì˜ ì»¨íŠ¸ë¡¤ëŸ¬ íšŒì „ ì°¨ì´)
 		RecoilDeltaRot = RecoilDeltaRot + (OwnerPlayerController->GetControlRotation() - tmprot);
 	}
 }
-// ¹İµ¿À» À§ÇÑ(ÄÁÆ®·Ñ·¯ È¸Àü) È¸Àü ÃÊ±â °ª ¼¼ÆÃ
+// ë°˜ë™ì„ ìœ„í•œ(ì»¨íŠ¸ë¡¤ëŸ¬ íšŒì „) íšŒì „ ì´ˆê¸° ê°’ ì„¸íŒ…
 void UCombatComponent::RecoilStart()
 {
-	OwnerPlayerController = OwnerPlayerController == nullptr ?
-		Cast<APlayerController>(OwnerCharacter->GetController()) : OwnerPlayerController;
+	OwnerPlayerController = OwnerPlayerController == nullptr ? Cast<APlayerController>(OwnerCharacter->GetController()) : OwnerPlayerController;
 	if (OwnerPlayerController == nullptr) return;
 
 	PlayerDeltaRot = FRotator(0.0f, 0.0f, 0.0f);
@@ -702,7 +690,7 @@ void UCombatComponent::RecoilStart()
 
 	Firing = true;
 
-	// FireTimer Å¸ÀÌ¸Ó¸¦ ÀÌ¿ëÇØ ÃÑÀ» ¸îÃÊµ¿¾È œi´ÂÁö ¾Ë¾Æ³¿
+	// FireTimer íƒ€ì´ë¨¸ë¥¼ ì´ìš©í•´ ì´ì„ ëª‡ì´ˆë™ì•ˆ ì‡ëŠ”ì§€ ì•Œì•„ëƒ„
 	GetWorld()->GetTimerManager().SetTimer(FireTimer, this, &UCombatComponent::RecoilTimerFunction, 100.f, false);
 
 	IsRecoil = true;
@@ -721,8 +709,8 @@ void UCombatComponent::RecoilTimerFunction()
 }
 
 
-// ¾Ö´Ï¸ŞÀÌ¼ÇÀÇ ³ëÆ¼ÆÄÀÌ¿¡ ÀÇÇØ È£ÃâµÊ
-// ÅºÃ¢À» ÃÑ¿¡ ¶§±â
+// ì• ë‹ˆë©”ì´ì…˜ì˜ ë…¸í‹°íŒŒì´ì— ì˜í•´ í˜¸ì¶œë¨
+// íƒ„ì°½ì„ ì´ì— ë•Œê¸°
 void UCombatComponent::DettachGunMag()
 {
 	if (EquippedWeapon == nullptr || OwnerCharacter == nullptr || HandSceneComponent == nullptr) return;
@@ -737,7 +725,7 @@ void UCombatComponent::DettachGunMag()
 	bMovingGunMag = true;
 
 }
-// ÅºÃ¢À» ÃÑ¿¡ ºÙÀÌ±â
+// íƒ„ì°½ì„ ì´ì— ë¶™ì´ê¸°
 void UCombatComponent::AttachGunMag()
 {
 	bMovingGunMag = false;

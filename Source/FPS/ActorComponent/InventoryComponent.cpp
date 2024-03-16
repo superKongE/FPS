@@ -162,6 +162,7 @@ bool UInventoryComponent::IsRoomAvailable(class UItemObject* ItemObject, int32 T
 	return true;
 }
 
+
 FTileStruct UInventoryComponent::IndexToTile(int32 Index)
 {
 	FTileStruct TileStruct;
@@ -233,7 +234,7 @@ void UInventoryComponent::DeleteFormInventory(UItemObject* ItemObject)
 			Item->Init(ItemObject);
 			Item->SetOwner(nullptr);
 			Item->DropWeaponState();
-			Item->GetItemMesh()->AddImpulse(Item->GetUpVector() * 10.f);
+			Item->GetItemMesh()->AddImpulse(Item->GetUpVector() * ImpulseZValue);
 		}
 	}
 }

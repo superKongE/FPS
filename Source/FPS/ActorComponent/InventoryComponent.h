@@ -93,9 +93,6 @@ private:
 	UPROPERTY(EditAnywhere, Category = Inventory)
 	float TileSize = 50.f;
 
-	/*UPROPERTY()
-	TArray<class UItemObject*> ItemObjectArray;*/
-
 	UPROPERTY()
 	TMap<class UItemObject*, FIndexArray> ItemMaps;
 	TArray<bool> ItemArray;
@@ -103,6 +100,9 @@ private:
 	bool IsDirty = false;
 
 	bool bDropEventHandled = false;
+
+	UPROPERTY(EditAnywhere, Category = Item)
+	float ImpulseZValue = 10.f;
 
 private:
 	UPROPERTY()

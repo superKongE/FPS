@@ -169,7 +169,6 @@ private:
 
 // 총기 반동 관련
 private:
-	FRotator RecoilRotator = FRotator::ZeroRotator;
 	FTransform RecoilTransform;
 	FTransform CurrentRecoilTransform;
 	FVector RecoilLocation;
