@@ -75,18 +75,13 @@ float UFootIKComponent::LeftFootLineTrace(FTransform LeftFootTransform)
 
 	FHitResult HitResult;
 	GetWorld()->LineTraceSingleByChannel(HitResult, LeftFootStart, LeftFootEnd, ECollisionChannel::ECC_WorldStatic, FQP);
-	//DrawDebugLine(GetWorld(), LeftFootStart, LeftFootEnd, FColor::Red, false);
 
 	if (HitResult.bBlockingHit)
 	{
 		if (OwnerCharacter->GetVelocity().Size() == 0.f)
-		{
 			LeftFootRotation = NormalToRotator(HitResult.Normal);
-		}
-		/*else
-		{
+		else
 			RightFootRotation = FRotator::ZeroRotator;
-		}*/
 
 		return HitResult.ImpactPoint.Z - OwnerCharacter->GetMesh()->GetComponentLocation().Z;
 	}
@@ -102,18 +97,13 @@ float UFootIKComponent::RightFootLineTrace(FTransform RightFootTransform)
 
 	FHitResult HitResult;
 	GetWorld()->LineTraceSingleByChannel(HitResult, RightFootStart, RightFootEnd, ECollisionChannel::ECC_WorldStatic, FQP);
-	//DrawDebugLine(GetWorld(), RightFootStart, RightFootEnd, FColor::Red, false);
 
 	if (HitResult.bBlockingHit)
 	{
 		if (OwnerCharacter->GetVelocity().Size() == 0.f)
-		{
 			RightFootRotation = NormalToRotator(HitResult.Normal);
-		}
-		/*else
-		{
+		else
 			RightFootRotation = FRotator::ZeroRotator;
-		}*/
 
 		return HitResult.ImpactPoint.Z - OwnerCharacter->GetMesh()->GetComponentLocation().Z;
 	}
@@ -124,10 +114,11 @@ float UFootIKComponent::RightFootLineTrace(FTransform RightFootTransform)
 
 FRotator UFootIKComponent::NormalToRotator(FVector pVector)
 {
-	float fAtan2_1 = UKismetMathLibrary::DegAtan2(pVector.Y, pVector.Z);
-	float fAtan2_2 = UKismetMathLibrary::DegAtan2(pVector.X, pVector.Z);
-	fAtan2_2 *= -1.0f;
-	FRotator pResult = FRotator(fAtan2_2, 0.0f, fAtan2_1);
+	// 발의 좌우 회전
+	float roll = UKismetMathLibrary::DegAtan2(pVector.Y, pVector.Z);
+	// 발 앞 뒤로 회전
+	float pitch = -UKismetMathLibrary::DegAtan2(pVector.X, pVector.Z);
+	FRotator pResult = FRotator(pitch, 0.0f, roll);
 
 	return pResult;
 }
